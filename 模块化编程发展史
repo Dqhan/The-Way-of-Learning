@@ -1,0 +1,81 @@
+1.直接定义依赖{
+    a.js 
+    var animal = {
+        dog: 'wangwang',
+        cat: 'miaomiao',
+        person: 'xiaoming'
+    }
+
+    function action(){
+        //do  something    
+    }
+
+    b.js
+    function action(){
+        // error： 重复定义
+    }
+
+    <head>
+        <script type="text/javascript" src="a.js"></script>
+        <script type="text/javascript" src="b.js"></script>
+    </head>
+}
+
+2.命名空间模式
+
+var namespace = {}
+
+namespace.action = function(){
+
+}
+
+3.利用闭包的形式封装私有变量
+
+(function(global, undefined , factory, plugin){
+    global[plugin]  = factory.call(global,undefined);
+})(window,undefined,function(undefined){
+    var a =  {};
+
+    var b  = {};
+
+    return {
+        a: a,
+        b:  b
+    }
+},'demo');
+
+但是仍然存在一个什么问题呢
+
+大量的引用依赖问题
+<script src="a.js"></script>
+<script src="a1.js"></script>
+<script src="a2.js"></script>
+<script src="a3.js"></script>
+.
+.
+.
+<script src="aN.js"></script>
+
+AMD 即 模块化编程思想正式诞生  大名鼎鼎的就是require.js  异步模块策略
+
+define([],fucntion(){
+
+})
+
+CMD  Seajs
+
+define(function(){
+    require('');
+    require('');
+})
+
+Commonjs
+
+module.exports = {}
+require();
+
+
+ES6 ES module
+export default  {}
+
+import XX from '';
