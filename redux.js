@@ -252,3 +252,20 @@ store.dispatch({
 
 
 
+class Test extends React.Component{
+    constructor(){
+
+    }
+
+    componentDidMount(){
+
+    }
+
+    componentWillMount(){
+
+    }
+
+    shouldComponentUpdate(){
+
+    }
+}
