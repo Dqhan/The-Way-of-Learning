@@ -1,7 +1,11 @@
 第一种
 利用DllPlugin集成出第三方不变的文件，再利用DllReferencePlugin引入webpack.config.js中，
 其他什么配置都不需要动，从而达到分离第三方的类库的目的
+但是使用得时候由于需要import
+如何不需要每个页面都import呢，利用ProvidePlugin
+
+
 第二种
 externals分离第三方，但是需要在html页面引入第三方类库，达到分离第三方的效果
-
 针对同一类库，两种方案不能并用，多种类库分离，可以考虑两种方式并用（但是不能针对同一类库）
+使用时候不需要import （因为在html中全局引入了脚本）
