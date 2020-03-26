@@ -118,7 +118,7 @@ web缓存类型{
     }
     使用缓存有关的 HTTP 消息报头{
         新鲜度{
-            Expires      Sun，16，OCT，2016         响应           告诉浏览器在过期时间前可以使用副本
+                Expires      Sun，16，OCT，2016         响应           告诉浏览器在过期时间前可以使用副本
                 Pragma       no-cache                   响应           告诉浏览器忽略资源缓存副本（http1.1可用cache-control控制）
                 cache-control  no-cache                 响应          告诉浏览器忽略副本资源，直接从源服务器获取资源
                                 no-store                响应           强制缓存在任何情况下都不要保留副本
@@ -181,7 +181,7 @@ web缓存类型{
             让动态脚本定期将内容改变时导出成静态文件，Web 直接访问带有 Last-Modified/Etag 的静态文件
             开发者可以通过代码给动态脚本的响应头中添加 Cache-Control: max-age，告诉浏览器在过期前可以直接使用副本
             通过代码给动态脚本的响应头添加 Last-Modified/Etag 信息，浏览器再次请求的时候，
-            可以通过解析 If-Modified-Since/If-None-Match 得知浏览器是否存在缓存，由代码逻辑控制是否返回 304
+            可以通过解析If-Modified-Since/If-None-Match 得知浏览器是否存在缓存，由代码逻辑控制是否返回 304
         }
     }
 }

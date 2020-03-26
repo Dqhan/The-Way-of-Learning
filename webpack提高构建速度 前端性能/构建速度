@@ -1,0 +1,6 @@
+通过externals 提取第三方类库
+通过DllPlugin DllReferencePlugin提取第三方类库
+Happypack 多线层编译
+加速UglifyPlugin压缩速度
+Tree shaking
+scope hoisting
