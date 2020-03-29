@@ -21,8 +21,16 @@ module.exports = {
                 test: /\.less$/,
                 use: [
                     MiniCssExtractPlugin.loader,
-                    'css-loader',
+                    {
+                        loader: 'css-loader',
+                        // options: {
+                        //     sourceMap: true,
+                        //     modules: true,
+                        //     localIdentName: '[name]---[local]---[hash:base64:5]'
+                        // }
+                    },
                     'less-loader',
+
                 ],
                 exclude: /node_modules/
             },
@@ -44,7 +52,11 @@ module.exports = {
         ]
     },
     optimization: {
+        runtimeChunk: {
+            "name": "manifest"
+        },
         splitChunks: {
+            chunks: 'all',
             cacheGroups: {
                 default: false,
                 vendors: false,
@@ -57,32 +69,29 @@ module.exports = {
                     enforce: true,
                     priority: -11
                 },
-                vendors: {
-                    test: /[\\/]node_modules[\\/]/,
-                    name: "vendors",
-                    priority: -10,
-                    chunks: 'all',
-                    reuseExistingChunk: true,
-                    enforce: true
-                },
-                style:{
+                // vendors: {
+                //     test: /[\\/]node_modules[\\/]/,
+                //     name: "vendors",
+                //     priority: -10,
+                //     chunks: 'all',
+                //     reuseExistingChunk: true,
+                //     enforce: true
+                // },
+                style: {
                     name: 'style',
-                    test: /\.(s*)css$/,
-                    minChunks: 2,
+                    test: /\.less$/,
                     chunks: 'all',
-                    enforce: true,
-                    priority: -12
+                    enforce: true
                 }
             }
         },
-        // runtimeChunk:{
-        //     name:'manifest'
-        // }
+        runtimeChunk:{
+            name:'manifest'
+        }
     },
     plugins: [
         new MiniCssExtractPlugin({
-            filename: "[name].[chunkhash:8].css",
-            // chunkFilename: "[id].css"
+            filename: '[name].[hash:5].css',
         }),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
@@ -99,11 +108,11 @@ module.exports = {
             chunks: ['app2', 'common'],
             // hash: true
         }),
-        // new webpack.DllReferencePlugin({
-        //     context: __dirname,
-        //     manifest: require('./distDll/dll/react.manifest.json')
-        // })
         new webpack.HashedModuleIdsPlugin(),
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: require('./distDll/dll/react.manifest.json')
+        })
     ],
 
 }

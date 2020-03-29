@@ -1,5 +1,5 @@
 require('./index.less')
-require('./app2.less')
+require('./appstyle2.less')
 require('./common');
 console.log('this is app2')
 
