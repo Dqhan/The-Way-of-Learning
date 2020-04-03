@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin')
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const { readFileSync: read } = require('fs');
 
 module.exports = {
     mode: 'development',
@@ -22,12 +21,7 @@ module.exports = {
                 use: [
                     MiniCssExtractPlugin.loader,
                     {
-                        loader: 'css-loader',
-                        // options: {
-                        //     sourceMap: true,
-                        //     modules: true,
-                        //     localIdentName: '[name]---[local]---[hash:base64:5]'
-                        // }
+                        loader: 'css-loader'
                     },
                     'less-loader',
 
@@ -39,12 +33,7 @@ module.exports = {
                 use: [
                     'cache-loader',
                     {
-                        loader: 'babel-loader',
-                        options: {
-                            // cacheDirectory: path.join(__dirname,'./build/', 'babel_cache')
-                            // happyPackMode: true,
-                            // transpileOnly: true
-                        }
+                        loader: 'babel-loader'
                     }
                 ],
                 exclude: /node_modules/
@@ -52,9 +41,6 @@ module.exports = {
         ]
     },
     optimization: {
-        // runtimeChunk: {
-        //     "name": "manifest"
-        // },
         splitChunks: {
             chunks: 'all',
             cacheGroups: {
@@ -68,21 +54,7 @@ module.exports = {
                     name: 'common',
                     enforce: true,
                     priority: -11
-                },
-                // vendors: {
-                //     test: /[\\/]node_modules[\\/]/,
-                //     name: "vendors",
-                //     priority: -10,
-                //     chunks: 'all',
-                //     reuseExistingChunk: true,
-                //     enforce: true
-                // },
-                // style: {
-                //     name: 'style',
-                //     test: /\.less$/,
-                //     chunks: 'all',
-                //     enforce: true
-                // }
+                }
             }
         }
     },
@@ -92,24 +64,21 @@ module.exports = {
         }),
         new CleanWebpackPlugin(),
         new HtmlWebpackPlugin({
-            templateContent: () => {
-                let template = path.resolve(__dirname, './index.html');
-                // let dll = path.resolve(__dirname, './index.html');
-                return read(template)
-                    .toString()
-                    .replace('$dll$', '../vendor/vendors.dll.js');
-            },
             title: 'index',
             template: './index.html',
             filename: 'index.html',
             chunks: ['app'],
-            // hash: true
+            hash: true
         }),
         new webpack.HashedModuleIdsPlugin(),
-        // new webpack.DllReferencePlugin({
-        //     context: __dirname,
-        //     manifest: require('./distDll/dll/react.manifest.json')
-        // })
+        new webpack.DllReferencePlugin({
+            context: __dirname,
+            manifest: require('./distDll/dll/react.manifest.json')
+        }),
+        new webpack.ProvidePlugin({
+            'React': 'react',
+            'ReactDOM': 'react-dom'
+        })
     ],
 
 }
